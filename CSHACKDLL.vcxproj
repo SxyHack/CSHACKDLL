@@ -158,8 +158,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\actor\CSBot.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="src\dump\Offsets.h" />
+    <ClInclude Include="src\finder\CSBotFinder.h" />
     <ClInclude Include="third-party\imgui\backends\imgui_impl_dx10.h" />
     <ClInclude Include="third-party\imgui\backends\imgui_impl_dx11.h" />
     <ClInclude Include="third-party\imgui\backends\imgui_impl_dx9.h" />
@@ -178,8 +181,10 @@
     <ClInclude Include="third-party\kiero\minhook\src\hde\table32.h" />
     <ClInclude Include="third-party\kiero\minhook\src\hde\table64.h" />
     <ClInclude Include="third-party\kiero\minhook\src\trampoline.h" />
+    <ClInclude Include="src\3d\Vector.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\actor\CSBot.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -187,6 +192,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\finder\CSBotFinder.cpp" />
     <ClCompile Include="third-party\imgui\backends\imgui_impl_dx10.cpp" />
     <ClCompile Include="third-party\imgui\backends\imgui_impl_dx11.cpp" />
     <ClCompile Include="third-party\imgui\backends\imgui_impl_dx9.cpp" />
@@ -202,6 +208,7 @@
     <ClCompile Include="third-party\kiero\minhook\src\hde\hde64.c" />
     <ClCompile Include="third-party\kiero\minhook\src\hook.c" />
     <ClCompile Include="third-party\kiero\minhook\src\trampoline.c" />
+    <ClCompile Include="src\3d\Vector.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

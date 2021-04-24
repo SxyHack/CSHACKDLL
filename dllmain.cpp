@@ -3,7 +3,12 @@
 #include "third-party/kiero/kiero.h"
 #include "third-party/imgui/backends/imgui_impl_win32.h"
 #include "third-party/imgui/backends/imgui_impl_dx9.h"
+#include "src/finder/CSBotFinder.h"
+
 #include <d3d9.h>
+#include <sstream>
+#include <iostream>
+
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -12,7 +17,17 @@ static EndScene gOldEndScene = NULL;
 static WNDPROC  gOldWndProc  = NULL;
 static HWND     gHandle      = NULL;
 static bool     ginit        = false;
+static MapBot   gBots;
 
+
+// 
+LRESULT __stdcall WndProc(const HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+
+	if (true && ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam))
+		return true;
+
+	return CallWindowProc(gOldWndProc, hWnd, uMsg, wParam, lParam);
+}
 
 void InitImGui(LPDIRECT3DDEVICE9 pDevice)
 {
@@ -37,6 +52,14 @@ long __stdcall hkEndScene(LPDIRECT3DDEVICE9 pDevice)
 	ImGui::NewFrame();
 
 	ImGui::Begin("ImGui Window");
+	for (auto& bot : gBots)
+	{
+		//std::stringstream ss;
+		//ss << "bot: " << bot.second->Health() << " X:" << bot.second->X() << " Y:" << bot.second->Y();
+		//ImGui::Text(ss.str().c_str());
+		ImGui::Text("Found Bot...");
+	}
+
 	ImGui::End();
 
 	ImGui::EndFrame();
@@ -58,13 +81,6 @@ BOOL CALLBACK EnumWindowsCallback(HWND handle, LPARAM lParam)
 	return FALSE; // window found abort search
 }
 
-LRESULT __stdcall WndProc(const HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
-
-	if (true && ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam))
-		return true;
-
-	return CallWindowProc(gOldWndProc, hWnd, uMsg, wParam, lParam);
-}
 
 void GetProcessWindow()
 {
@@ -89,6 +105,9 @@ int gHookThread()
 	gOldWndProc = (WNDPROC)SetWindowLongPtr(gHandle, GWL_WNDPROC, (LONG_PTR)WndProc);
 	// If you just need to get the function address you can use the kiero::getMethodsTable function
 	//oEndScene = (EndScene)kiero::getMethodsTable()[42];
+
+	CSBotFinder::Execute(gBots);
+
 	return 0;
 }
 

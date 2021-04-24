@@ -90,6 +90,18 @@
     <ClInclude Include="third-party\imgui\backends\imgui_impl_win32.h">
       <Filter>ImGui\backends</Filter>
     </ClInclude>
+    <ClInclude Include="src\actor\CSBot.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\dump\Offsets.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\finder\CSBotFinder.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\3d\Vector.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -142,6 +154,15 @@
     </ClCompile>
     <ClCompile Include="third-party\imgui\backends\imgui_impl_win32.cpp">
       <Filter>ImGui\backends</Filter>
+    </ClCompile>
+    <ClCompile Include="src\actor\CSBot.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\finder\CSBotFinder.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\3d\Vector.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
