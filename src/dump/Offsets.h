@@ -5,6 +5,11 @@
 
 namespace Offsets 
 {
+	namespace Player
+	{
+		constexpr ptrdiff_t dwViewMatrix = 0x4D96B34;
+	}
+
 	namespace Bot
 	{
 		constexpr ptrdiff_t BOT_ENTRY_ADDRESS = 0xA7D74C;

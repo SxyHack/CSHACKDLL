@@ -5,7 +5,7 @@
 class CSBot
 {
 public:
-	CSBot(uintptr_t offset);
+	CSBot(uintptr_t baseAddr);
 	~CSBot();
 
 	INT32 Health();
@@ -14,7 +14,7 @@ public:
 	float Z();
 
 public:
-	uintptr_t  Offset;
+	uintptr_t  BaseAddr;
 	uintptr_t  HealthPtr;
 	uintptr_t  XPtr;
 	uintptr_t  YPtr;

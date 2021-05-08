@@ -72,8 +72,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>P:\Microsoft\Directx9SDK\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>P:\Microsoft\Directx9SDK\Lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\Environment\Microsoft\DirectXSDK\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Environment\Microsoft\DirectXSDK\Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -94,7 +94,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)third-party\imgui\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)third-party\imgui\;$(ProjectDir)src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -113,7 +113,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)third-party\imgui\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)third-party\imgui\;$(ProjectDir)src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -158,6 +158,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\3rd\Player.h" />
     <ClInclude Include="src\actor\CSBot.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
@@ -181,9 +182,10 @@
     <ClInclude Include="third-party\kiero\minhook\src\hde\table32.h" />
     <ClInclude Include="third-party\kiero\minhook\src\hde\table64.h" />
     <ClInclude Include="third-party\kiero\minhook\src\trampoline.h" />
-    <ClInclude Include="src\3d\Vector.h" />
+    <ClInclude Include="src\3rd\Vector.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\3rd\Player.cpp" />
     <ClCompile Include="src\actor\CSBot.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="pch.cpp">
@@ -208,7 +210,7 @@
     <ClCompile Include="third-party\kiero\minhook\src\hde\hde64.c" />
     <ClCompile Include="third-party\kiero\minhook\src\hook.c" />
     <ClCompile Include="third-party\kiero\minhook\src\trampoline.c" />
-    <ClCompile Include="src\3d\Vector.cpp" />
+    <ClCompile Include="src\3rd\Vector.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

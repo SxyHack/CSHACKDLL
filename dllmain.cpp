@@ -4,6 +4,7 @@
 #include "third-party/imgui/backends/imgui_impl_win32.h"
 #include "third-party/imgui/backends/imgui_impl_dx9.h"
 #include "src/finder/CSBotFinder.h"
+#include "src/3rd/Vector.h"
 
 #include <d3d9.h>
 #include <sstream>
@@ -52,13 +53,32 @@ long __stdcall hkEndScene(LPDIRECT3DDEVICE9 pDevice)
 	ImGui::NewFrame();
 
 	ImGui::Begin("ImGui Window");
+
+	//ImGui::SameLine();
+	//ImGui::SameLine();
+
+	std::stringstream ss;
+	std::string strList;
 	for (auto& bot : gBots)
 	{
-		//std::stringstream ss;
+		std::stringstream ss;
+		CSBot* pBot = (CSBot*)bot.second;
+		Vector3 vec3(pBot->X(), pBot->Y(), pBot->Z());
+		Vector2 sp = vec3.ToScreenPos(pDevice);
+		ss << "bot: 0x" << std::hex << pBot->BaseAddr
+			<< " x: " << pBot->X()
+			<< " y: " << pBot->Y()
+			<< " z: " << pBot->Z()
+			<< " screen X: " << sp.X
+			<< " ," << sp.Y
+			<< std::endl;
+		strList = ss.str();
+		//sBotList = ss.str();
 		//ss << "bot: " << bot.second->Health() << " X:" << bot.second->X() << " Y:" << bot.second->Y();
-		//ImGui::Text(ss.str().c_str());
-		ImGui::Text("Found Bot...");
+		ImGui::Text(strList.c_str());
 	}
+
+	//ImGui::ShowDemoWindow();
 
 	ImGui::End();
 
@@ -86,12 +106,20 @@ void GetProcessWindow()
 {
 	gHandle = NULL;
 	do 
+	{
 		EnumWindows(EnumWindowsCallback, NULL);
+		Sleep(10);
+	}
 	while (gHandle == NULL);
 }
 
-int gHookThread()
+DWORD WINAPI MainThread(HMODULE hModule)
 {
+	AllocConsole();
+	FILE* f;
+	freopen_s(&f, "CONOUT$", "w", stdout);
+	std::cout << "Starting Console...\n";
+
 	if (kiero::init(kiero::RenderType::D3D9) != kiero::Status::Success) {
 		return 0;
 	}
@@ -106,8 +134,19 @@ int gHookThread()
 	// If you just need to get the function address you can use the kiero::getMethodsTable function
 	//oEndScene = (EndScene)kiero::getMethodsTable()[42];
 
-	CSBotFinder::Execute(gBots);
+	while (true) {
+		if (GetAsyncKeyState(VK_END) & 1) {
+			std::cout << "Pressed Key 'END'" << std::endl;
+			break;
+		}
 
+		CSBotFinder::Execute(gBots);
+		Sleep(500);
+	}
+
+	fclose(f);
+	FreeConsole();
+	FreeLibraryAndExitThread(hModule, 0);
 	return 0;
 }
 
@@ -119,7 +158,7 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReser
 	switch (ul_reason_for_call)
 	{
 	case DLL_PROCESS_ATTACH:
-		CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)gHookThread, NULL, 0, NULL);
+		CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)MainThread, hModule, 0, NULL);
 		break;
 	case DLL_PROCESS_DETACH:
 		kiero::shutdown();
